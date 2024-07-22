@@ -1,0 +1,15 @@
+*
+!*/
+
+.vscode
+.cache
+.mypy_cache
+.venv
+dist
+
+!LICENSE
+!.gitignore
+
+!*.py
+!*.md
+!pyproject.toml
