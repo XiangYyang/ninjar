@@ -12,6 +12,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent",
+  "Typing :: Typed",
 ]
 dependencies = [
   "colorama>=0.4.5",
@@ -26,3 +27,9 @@ version = "1.0.0"
 
 [project.urls]
 Repository = "https://github.com/XiangYyang/ninjar.git"
+
+[tool.mypy]
+exclude = [".venv"]
+files = ["src", "tests"]
+pretty = true
+strict = true

@@ -10,6 +10,7 @@ dist
 !LICENSE
 !.gitignore
 
+!py.typed
 !*.py
 !*.md
 !pyproject.toml
