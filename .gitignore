@@ -13,3 +13,4 @@ dist
 !*.py
 !*.md
 !pyproject.toml
+!*.yml
