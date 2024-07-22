@@ -34,8 +34,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mypy colorama
+          pip install mypy colorama types-colorama
 
       - name: mypy type checker for `src/ninjar`
         run: |
-          mypy src/ninjar --install-types --pretty --strict
+          mypy src/ninjar --pretty --strict
