@@ -10,11 +10,12 @@ This module provides the global variable
 
 
 import os
-import sys
 import subprocess
-from typing import Dict
-from string import Template
+import sys
 from datetime import datetime
+from string import Template
+from typing import Dict
+
 from .writeln import LogLevel, log_out
 
 

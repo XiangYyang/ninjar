@@ -8,15 +8,17 @@ Ninja generator helper
 This module provides the abstraction for ninja build scripts
 """
 
-import os
-import io
 import glob
+import io
+import os
 import time
 from abc import ABC, abstractmethod
-from .expr import global_eval_path, global_eval_expr
-from .shell import join_command
-from typing import Dict, List, Union, Self, Generator, final
 from dataclasses import dataclass
+from types import TracebackType
+from typing import Dict, Generator, List, Optional, Self, Union, final
+
+from .expr import global_eval_expr, global_eval_path
+from .shell import join_command
 
 
 class QueryTypeError(RuntimeError):
@@ -57,7 +59,12 @@ class NinjaGenerator:
     def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, type, value, trace) -> None:
+    def __exit__(
+        self,
+        exc_type: Optional["BaseException"],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[TracebackType],
+    ) -> None:
         # write the build items
         for line in self.build_item:
             self.file_handler.write(line)

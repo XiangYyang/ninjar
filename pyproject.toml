@@ -7,20 +7,22 @@ authors = [
   {name = "XiangYang", email = "hinata.hoshino@foxmail.com"},
 ]
 classifiers = [
-  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
   "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent",
 ]
 dependencies = [
   "colorama>=0.4.5",
 ]
-description = "A small example package"
+description = "A small ninjar build script generator framework."
 keywords = ["ninjar generator"]
 license = {file = "LICENSE"}
 name = "ninjar"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 version = "1.0.0"
 
 [project.urls]
-Repository = "hhttps://github.com/XiangYyang/ninjar.git"
+Repository = "https://github.com/XiangYyang/ninjar.git"

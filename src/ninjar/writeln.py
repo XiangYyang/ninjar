@@ -6,10 +6,10 @@
 Colorful write_ln
 """
 
-import colorama
 from enum import Enum
-from colorama import Fore
 
+import colorama
+from colorama import Fore
 
 global_level: int = 0
 

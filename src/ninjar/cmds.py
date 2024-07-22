@@ -7,11 +7,12 @@
 """
 
 
-import os
 import json
+import os
 import shlex
+from typing import Callable, Dict, List
+
 from .shell import execute, execute_with_stdout, save_content
-from typing import List, Dict, Callable
 from .writeln import LogLevel, log_out
 
 

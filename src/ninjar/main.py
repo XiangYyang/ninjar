@@ -9,18 +9,19 @@ This module provides a command invoker based `inspect` module.
 """
 
 
+import argparse
 import hashlib
 import inspect
-import argparse
-from . import expr, writeln, shell
-from . import cmds as ninja_tool
-from enum import Enum
-from .ninja import QueryTypeError
-from typing import List, Callable, Dict, Union, Tuple, Any, NoReturn, TypeAlias
-from .writeln import log_out, LogLevel
-from functools import wraps
 from dataclasses import dataclass
+from enum import Enum
+from functools import wraps
+from types import ModuleType
+from typing import Any, Callable, Dict, List, NoReturn, Tuple, TypeAlias, Union
 
+from . import cmds as ninja_tool
+from . import expr, shell, writeln
+from .ninja import QueryTypeError
+from .writeln import LogLevel, log_out
 
 # note:
 # for the new version (Python >= 3.12)
@@ -154,8 +155,8 @@ def action(
     """
     def deps_inner(func: ActionFunction) -> Action:
         @wraps(func)
-        def wrapped(*args, **kwargs):
-            return func(*args, **kwargs)
+        def wrapped(arg1: Dict[str, str], arg2: Dict[str, str]) -> None:
+            return func(arg1, arg2)
 
         if isinstance(deps, list):
             deps_list = deps.copy()
@@ -205,7 +206,7 @@ class BuildScript:
     options: Dict[str, UserOption]
     variables: Dict[str, str]
 
-    def __init__(self, self_module) -> None:
+    def __init__(self, self_module: ModuleType) -> None:
         writeln.init()
         expr.setup_global_variable()
 

@@ -11,9 +11,8 @@ it provides global variables, command invoker, and the build rule abstraction.
 
 from . import shell
 from .main import BuildScript, action, options, variables
-from .ninja import NinjaGenerator, UnitStage, Query
-from .writeln import log_out, LogLevel, colorful_print, Color
-
+from .ninja import NinjaGenerator, Query, UnitStage
+from .writeln import Color, LogLevel, colorful_print, log_out
 
 # alias: Query.from_glob
 select = Query.from_glob
