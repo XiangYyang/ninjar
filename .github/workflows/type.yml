@@ -38,4 +38,4 @@ jobs:
 
       - name: mypy type checker for `src/ninjar`
         run: |
-          mypy src/ninjar --pretty --strict
+          mypy src/ninjar --install-types --pretty --strict
