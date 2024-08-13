@@ -372,6 +372,32 @@ class Query:
         return Query(inner_fn())
 
     @staticmethod
+    def unit() -> "Query":
+        """
+        return an empty Query
+        """
+        def inner_fn() -> Generator[Element, None, None]:
+            yield Element([], ':undefined')
+
+        it = inner_fn()
+        it.__next__()
+        return Query(it)
+
+    @staticmethod
+    def from_list(lst: List[str], typ: str, fold: bool = False) -> "Query":
+        """
+        Get the data view from a list
+        """
+        def inner_fn() -> Generator[Element, None, None]:
+            if fold:
+                yield Element(lst, typ)
+            else:
+                for q in lst:
+                    yield Element([q], typ)
+
+        return Query(inner_fn())
+
+    @staticmethod
     def from_glob(glob_filter: Union[List[str], str], exclude: List[str] = []) -> "Query":
         """
         Get the data view by glob expression
