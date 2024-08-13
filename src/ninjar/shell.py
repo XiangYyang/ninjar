@@ -23,7 +23,7 @@ class ShellError(RuntimeError):
         super().__init__(*args)
 
 
-def execute(cmd: Union[str, List[str]]) -> None:
+def execute(cmd: Union[str, List[str]], shell: bool = False) -> None:
     """
     Execute the command
     """
@@ -37,12 +37,16 @@ def execute(cmd: Union[str, List[str]]) -> None:
     log_out(LogLevel.DEBUG, f'> run `{cmd_eval}`')
 
     try:
-        subprocess.run(cmd_eval, check=True)
+        subprocess.run(cmd_eval, check=True, shell=shell)
     except subprocess.CalledProcessError:
         raise ShellError(f'command `{cmd_eval}` exit code is not 0')
 
 
-def execute_with_stdout(cmd: Union[str, List[str]], encoding: str = 'utf-8') -> str:
+def execute_with_stdout(
+    cmd: Union[str, List[str]],
+    encoding: str = 'utf-8',
+    shell: bool = False
+) -> str:
     """
     Execute the command and return the stdout
     """
@@ -56,7 +60,7 @@ def execute_with_stdout(cmd: Union[str, List[str]], encoding: str = 'utf-8') -> 
     log_out(LogLevel.DEBUG, f'> run `{cmd_eval}`')
 
     try:
-        cmd_out = subprocess.run(cmd_eval, check=True, capture_output=True)
+        cmd_out = subprocess.run(cmd_eval, check=True, capture_output=True, shell=shell)
         return cmd_out.stdout.decode(encoding).rstrip()
     except subprocess.CalledProcessError:
         raise ShellError(f'command `{cmd_eval}` exit code is not 0')
