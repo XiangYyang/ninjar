@@ -54,6 +54,7 @@ def compdb(compdb_path: str = 'compile_commands.json') -> Callable[[Dict[str, st
 
 def _simplify_compdb(
     json_str: str,
+    outs: List[str] = ['.o', '.obj'],
     exts: List[str] = ['.c', '.h', '.s', '.asm', '.cc', '.hpp', '.cpp', '.ixx', '.cxx'],
 ) -> str:
     """
@@ -62,9 +63,11 @@ def _simplify_compdb(
     json_obj = json.loads(json_str)
     json_trim = []
     for json_item in json_obj:
+        out_name = json_item['output']
+        out_ext = os.path.splitext(os.path.basename(out_name))[1]
         file_name = json_item['file']
         file_ext = os.path.splitext(os.path.basename(file_name))[1]
-        if file_ext in exts:
+        if file_ext in exts and out_ext in outs:
             json_content = {
                 'file': os.path.normpath(file_name),
                 'output': os.path.normpath(json_item['output']),
