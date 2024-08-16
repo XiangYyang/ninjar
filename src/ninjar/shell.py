@@ -10,7 +10,7 @@ Shell execute helper
 import subprocess
 from typing import List, Union
 
-from .expr import global_eval_path
+from .expr import global_eval_path, global_eval_expr
 from .writeln import LogLevel, log_out
 
 
@@ -33,7 +33,7 @@ def execute(cmd: Union[str, List[str]], shell: bool = False) -> None:
         cmd_str = join_command(cmd)
 
     # replace variables
-    cmd_eval = global_eval_path(cmd_str)
+    cmd_eval = global_eval_expr(cmd_str)
     log_out(LogLevel.DEBUG, f'> run `{cmd_eval}`')
 
     try:
@@ -56,7 +56,7 @@ def execute_with_stdout(
         cmd_str = join_command(cmd)
 
     # replace variables
-    cmd_eval = global_eval_path(cmd_str)
+    cmd_eval = global_eval_expr(cmd_str)
     log_out(LogLevel.DEBUG, f'> run `{cmd_eval}`')
 
     try:

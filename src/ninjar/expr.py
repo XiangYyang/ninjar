@@ -10,13 +10,10 @@ This module provides the global variable
 
 
 import os
-import subprocess
 import sys
 from datetime import datetime
 from string import Template
 from typing import Dict
-
-from .writeln import LogLevel, log_out
 
 
 class ExprEvalException(RuntimeError):
@@ -58,17 +55,6 @@ def setup_global_variable() -> None:
     # current timr
     now = datetime.now()
 
-    # load git hash
-    try:
-        cmd_out = subprocess.run('git rev-parse HEAD', check=True, capture_output=True)
-        git_commid_hash = cmd_out.stdout.decode('utf-8').strip()
-    except subprocess.CalledProcessError:
-        git_commid_hash = 'None'
-        log_out(LogLevel.WARN, f'! git{global_variables} `git rev-parse HEAD` failed, exitcode is not zero')
-    except FileNotFoundError:
-        git_commid_hash = 'Undefined'
-        log_out(LogLevel.WARN, f'! git{global_variables} `git rev-parse HEAD` failed, `git` was not found')
-
     # pre-define variables
     global_variables = {
         'root': base_dir(),
@@ -80,8 +66,8 @@ def setup_global_variable() -> None:
         'date': str(datetime.date(now)),
         'time': str(datetime.time(now)),
         'timestamp': str(datetime.timestamp(now)),
-        'git_commit': git_commid_hash,
-        'self': get_self_command(),
+        'self_script_host': os.path.basename(sys.executable),
+        'self_script_name': sys.argv[0],
     }
 
     # add the enviroment variables
@@ -96,15 +82,6 @@ def setup_global_variable() -> None:
 
 def base_dir() -> str:
     return os.path.abspath('.')
-
-
-def get_self_command() -> str:
-    """
-    Get the command of this script
-    """
-    script_host = os.path.basename(sys.executable)
-    script_name = sys.argv[0]
-    return f'{script_host} {script_name}'
 
 
 def global_eval_path(path: str, addition_dict: Dict[str, str] = {}) -> str:
