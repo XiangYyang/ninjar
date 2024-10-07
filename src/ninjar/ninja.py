@@ -102,7 +102,14 @@ class NinjaGenerator:
         if len(dep_file) > 0:
             self.file_handler.write(f'    depfile = {dep_file}\n')
 
-    def add_build(self, rule: str, out: str, inp: List[str], dyn_deps: List[str] = []) -> None:
+    def add_build(
+        self,
+        rule: str,
+        out: str,
+        inp: List[str],
+        dyn_deps: List[str] = [],
+        imp_deps: List[str] = []
+    ) -> None:
         """
         Write a build target
 
@@ -111,13 +118,18 @@ class NinjaGenerator:
             out (str): output files
             inp (List[str]): input files
         """
-        inputs = ' '.join(inp)
+        stat = f'build {out}: {rule}'
+
+        # input items
+        stat += ' ' + ' '.join(inp)
+
+        if len(imp_deps) > 0:
+            stat += ' | ' + ' '.join(imp_deps)
 
         if len(dyn_deps) > 0:
-            dyn_deps_str = '|| ' + ' '.join(dyn_deps)
-            self.build_item.append(f'build {out}: {rule} {inputs} {dyn_deps_str}')
-        else:
-            self.build_item.append(f'build {out}: {rule} {inputs}')
+            stat += '|| ' + ' '.join(dyn_deps)
+
+        self.build_item.append(stat)
 
     def add_defaults(self, file: Union[str, List[str]]) -> None:
         """
