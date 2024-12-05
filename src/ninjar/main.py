@@ -12,6 +12,7 @@ This module provides a command invoker based `inspect` module.
 import argparse
 import hashlib
 import inspect
+import sys
 from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
@@ -284,7 +285,7 @@ class BuildScript:
                 raise BuildScriptException('missing `ninja` action')
         except BuildScriptException as e:
             log_out(LogLevel.FATAL, f'x Runtime error {e}')
-            quit(1)
+            sys.exit(1)
 
     def run(self) -> NoReturn:
         """
@@ -299,33 +300,33 @@ class BuildScript:
         # version info?
         if self.args.version:
             log_out(LogLevel.MESSAGE, 'Build script version 2.0.0')
-            quit(0)
+            sys.exit(0)
 
         # print list?
         if self.args.list:
             self._print_list()
-            quit(0)
+            sys.exit(0)
 
         # run the build script
         try:
             self._run_build_script()
         except BuildScriptException as e:
             log_out(LogLevel.FATAL, f'x build script error: {e}')
-            quit(1)
+            sys.exit(1)
         except expr.ExprEvalException as e:
             log_out(LogLevel.FATAL, f'x Express error: {e}')
-            quit(1)
+            sys.exit(1)
         except QueryTypeError as e:
             log_out(LogLevel.FATAL, f'x Query failed: {e}')
-            quit(1)
+            sys.exit(1)
         except shell.ShellError as e:
             log_out(LogLevel.FATAL, f'x Run command failed: {e}')
-            quit(1)
+            sys.exit(1)
         except RuntimeError as e:
             log_out(LogLevel.FATAL, f'x runtime error: {e}')
-            quit(1)
+            sys.exit(1)
 
-        quit(0)
+        sys.exit(0)
 
     def _run_build_script(self) -> None:
         """

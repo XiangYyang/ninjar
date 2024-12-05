@@ -41,7 +41,7 @@ def compdb(compdb_path: str = 'compile_commands.json') -> Callable[[Dict[str, st
     Run command `ninja -t compdb`, and save it to `compdb`
     """
     def inner_fn(opts: Dict[str, str], args: Dict[str, str]) -> None:
-        compdb = execute_with_stdout(['ninja', '-t', 'compdb'])
+        compdb = execute_with_stdout(['ninja', '-t', 'compdb'], shell=True)
 
         # write json
         json_str = _simplify_compdb(compdb)

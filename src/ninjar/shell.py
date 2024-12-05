@@ -10,7 +10,7 @@ Shell execute helper
 import subprocess
 from typing import List, Union
 
-from .expr import global_eval_path, global_eval_expr
+from .expr import global_eval_expr, global_eval_path
 from .writeln import LogLevel, log_out
 
 

@@ -127,7 +127,7 @@ class NinjaGenerator:
             stat += ' | ' + ' '.join(imp_deps)
 
         if len(dyn_deps) > 0:
-            stat += '|| ' + ' '.join(dyn_deps)
+            stat += ' || ' + ' '.join(dyn_deps)
 
         self.build_item.append(stat)
 
